@@ -2,7 +2,7 @@
 CREATE DATABASE IF NOT EXISTS fitness_network;
 USE fitness_network;
 
--- Удаление таблиц в правильном порядке
+
 DROP TABLE IF EXISTS visits;
 DROP TABLE IF EXISTS payments;
 DROP TABLE IF EXISTS records;
@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS trainers;
 DROP TABLE IF EXISTS halls;
 DROP TABLE IF EXISTS filials;
 
--- Создание таблиц
+
 CREATE TABLE filials (
     filial_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -128,10 +128,10 @@ CREATE TABLE visits (
     CONSTRAINT fk_visits_payments FOREIGN KEY (payment_id) REFERENCES payments(payment_id)
 );
 
--- 1.2. Изменение структуры таблиц
+
 ALTER TABLE visits ADD COLUMN notes TEXT;
 
--- 1.3. Вставка тестовых записей
+
 INSERT INTO filials (filial_id, name, address, phone) VALUES 
 (1, 'FitLife-Центр', 'г. Москва, ул. Ленина, 1', '(495) 123-4567'),
 (2, 'FitLife-Север', 'г. Москва, ул. Северная, 10', '(495) 765-4321');
@@ -181,15 +181,15 @@ INSERT INTO visits (filial_id, client_id, class_id, visit_date, entry_time, lock
 (1, 10000001, 400001, '2026-10-10', '18:30:00', 12, 'Пришёл', 5000000001, 6000000001),
 (1, 10000002, 400002, '2026-10-11', '19:00:00', 15, 'Пришёл', 5000000002, 6000000002);
 
--- 1.4. Обновление и Удаление
+
 UPDATE subscriptions SET status = 'Истёк' WHERE expiration_date < CURRENT_DATE;
 DELETE FROM records WHERE status = 'Отменено';
 
--- 1.5. Создание пользователей (Исправлено для совместимости с MariaDB/XAMPP)
+
 GRANT SELECT, INSERT, UPDATE ON fitness_network.* TO 'fitness_manager'@'localhost' IDENTIFIED BY 'ManagerPass123!';
 FLUSH PRIVILEGES;
 
--- 1.6. Выгрузка метаданных
+
 DESCRIBE filials;
 DESCRIBE visits;
 
